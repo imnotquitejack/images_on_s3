@@ -1,0 +1,34 @@
+ImagesOnS3
+==========
+
+This plugin is meant to be a super-simple way to store images on S3.
+
+* Requires 'aws-s3' gem
+* Requires 'rmagick' gem
+* Make sure that the object's view has an "uploaded_data" form field.
+* Make sure "config/amazon_s3.yml" exists.
+# TODO: Copy amazon_s3.yml.tpl to config directory on installation 
+
+
+Example
+=======
+
+class Photo < ActiveRecord::Base
+  has_images_on_s3 :sizes => { :full => '640x480>' }, :keep_original => true
+  # Must have these fields: filename, content_type 
+  # Optional fields: width, height, size
+end
+
+
+class PhotosController < ApplicationController
+  def create
+    @photo = Photo.create( params[:photo] )
+  end
+end
+
+@photo.public_url(:full)
+@photo.public_url(:original)
+@photo.public_url == @photo.public_url(:original)
+
+
+Copyright (c) 2010 jcollier@atlantistech.com, released under the MIT license
