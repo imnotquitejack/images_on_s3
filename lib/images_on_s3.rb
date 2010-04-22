@@ -8,8 +8,10 @@ class Magick::Image
     case self['EXIF:Orientation']
     when Magick::LeftBottomOrientation.to_i.to_s
       self.rotate!(-90)      
+      self['EXIF:Orientation'] = Magick::TopLeftOrientation.to_i.to_s
     when Magick::RightTopOrientation.to_i.to_s
       self.rotate!(90)      
+      self['EXIF:Orientation'] = Magick::TopLeftOrientation.to_i.to_s
     end
   end
 end
